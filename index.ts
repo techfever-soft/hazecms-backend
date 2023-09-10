@@ -16,6 +16,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/", routes);
 
 const port = 3000;
+
 app.listen(port, () => {
-  console.log(`dataServer écoute sur le port ${port}`);
+  console.log(`Client server listening on port ${port}`);
 });

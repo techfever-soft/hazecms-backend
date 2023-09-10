@@ -1,16 +1,22 @@
 import * as mysql from "mysql";
 import axios from "axios";
-import { MySQLInstallService } from "../../services/mysql_install.service";
-import { MySQLService } from "../../services/mysql.service";
-import { baseAPIUrl } from "../../../config";
+import { MySQLInstallService } from "../../services/mysql/install.service";
+import { serverAPIUrl } from "../../../api-config";
 import {
   AppInstallForm,
   AppInstallFormAdmin,
 } from "../../models/interfaces/app.interface";
+import fs from "fs";
+import path from "path";
 
 export class MySQLInstallController {
   constructor() {}
 
+  /**
+   * Checks if the database is available
+   * @param req any
+   * @param res any
+   */
   public checkDatabaseAvailability(req: any, res: any) {
     const connection = mysql.createConnection({
       host: req.body.host,
@@ -36,6 +42,11 @@ export class MySQLInstallController {
     });
   }
 
+  /**
+   * Finalizes the install by executing queries on mySQL
+   * @param req any
+   * @param res any
+   */
   public async finalizeInstall(req: any, res: any) {
     const newAppInstance: AppInstallForm = {
       activation: {
@@ -52,11 +63,11 @@ export class MySQLInstallController {
         port: req.body.database.port,
       },
       config: {
+        language: req.body.config.language,
+        timezone: req.body.config.timezone,
         adminsList: req.body.config.adminsList as AppInstallFormAdmin[],
       },
     };
-
-    // console.log(newAppInstance);
 
     const mySQLInstallService = new MySQLInstallService(
       newAppInstance.database.host,
@@ -70,9 +81,9 @@ export class MySQLInstallController {
     /**
      * ANCHOR Step one: Create app instance
      */
-    // TODO: Create app instance
+    // TODO: Create app instance on core server
     // axios
-    //   .post(baseAPIUrl + "app/createAppInstance", newAppInstance)
+    //   .post(serverAPIUrl + "app/createAppInstance", newAppInstance)
     //   .then(() => {
     //     console.log("created app instance");
     //   });
@@ -82,17 +93,49 @@ export class MySQLInstallController {
        * ANCHOR Step two: Create database & tables
        */
       await mySQLInstallService.createDatabase(databaseName);
+
       await mySQLInstallService.createAdminTable();
       await mySQLInstallService.createPagesTable();
       await mySQLInstallService.createPostsTable();
       await mySQLInstallService.createPostsCategoriesTable();
-      await mySQLInstallService.createConfigTable();
 
       await mySQLInstallService.insertAdmins(newAppInstance.config.adminsList);
       await mySQLInstallService.insertExamplePages();
       await mySQLInstallService.insertExampleCategories();
       await mySQLInstallService.insertExamplePosts();
-      await mySQLInstallService.insertDefaultConfig();
+
+      await mySQLInstallService.createConfigTable();
+      await mySQLInstallService.insertDefaultConfig(
+        newAppInstance.config.language,
+        newAppInstance.config.timezone
+      );
+
+      /**
+       * ANCHOR Step three: Update CMS internal config
+       */
+      const configPath = path.join(__dirname, "../../../../config.json");
+
+      fs.readFile(configPath, "utf8", (err: any, data: any) => {
+        const jsonData = JSON.parse(data);
+
+        jsonData.database = {};
+
+        jsonData.production = false;
+
+        jsonData.database.databaseType = newAppInstance.database.databaseType;
+        jsonData.database.host = newAppInstance.database.host;
+        jsonData.database.username = newAppInstance.database.username;
+        jsonData.database.password = newAppInstance.database.password;
+        jsonData.database.port = newAppInstance.database.port;
+        jsonData.database.database = newAppInstance.database.database;
+
+        const updatedJson = JSON.stringify(jsonData, null, 2);
+        fs.writeFile(configPath, updatedJson, "utf8", (err: any) => {
+          if (!err) {
+            console.log("[UPDATE] Updated JSON config !");
+          }
+        });
+      });
 
       /**
        * ANCHOR Step four: Return the status
