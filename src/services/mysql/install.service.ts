@@ -108,7 +108,7 @@ export class MySQLInstallService {
               published BOOLEAN NOT NULL,
               createdAt DATETIME NOT NULL,
               publishedAt DATETIME NOT NULL,
-              updatedAt DATETIME NOT NULL
+              updatedAt DATETIME NOT NULL ON UPDATE NOW() 
           )`;
 
       this.connection.query(createPostsTableQuery, (err: any) => {
@@ -134,6 +134,28 @@ export class MySQLInstallService {
       });
 
       console.log("[CREATE] Creating table « haze__posts_categories »");
+    });
+  }
+
+  public createUsersTable() {
+    return new Promise<void>((resolve, reject) => {
+      const createUsersTable = `
+          CREATE TABLE IF NOT EXISTS haze__users (
+              id INT AUTO_INCREMENT PRIMARY KEY,
+              username VARCHAR(255) NOT NULL,
+              email VARCHAR(255) NOT NULL,
+              passwordHash TEXT NOT NULL,
+              passwordSalt TEXT NOT NULL,
+              createdAt DATETIME NOT NULL,
+              lastSignIn DATETIME NULL
+          )`;
+
+      this.connection.query(createUsersTable, (err: any) => {
+        if (err) reject(err);
+        else resolve();
+      });
+
+      console.log("[CREATE] Creating table « haze__users »");
     });
   }
 

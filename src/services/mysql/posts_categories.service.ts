@@ -2,7 +2,7 @@ import * as mysql from "mysql";
 
 import { MySQLConnectionMiddleware } from "../../middlewares/database.middleware";
 
-export class MySQLPostsCategoriesService {
+export class MySQLPostCategoryService {
   public connection: mysql.Connection;
 
   constructor(host: string, user: string, password: string, port: number) {

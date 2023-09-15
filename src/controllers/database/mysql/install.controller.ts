@@ -1,11 +1,11 @@
 import * as mysql from "mysql";
 import axios from "axios";
-import { MySQLInstallService } from "../../services/mysql/install.service";
-import { serverAPIUrl } from "../../../api-config";
+import { MySQLInstallService } from "../../../services/mysql/install.service";
+import { serverAPIUrl } from "../../../../api-config";
 import {
   AppInstallForm,
   AppInstallFormAdmin,
-} from "../../models/interfaces/app.interface";
+} from "../../../models/interfaces/app.interface";
 import fs from "fs";
 import path from "path";
 
@@ -104,6 +104,8 @@ export class MySQLInstallController {
       await mySQLInstallService.insertExampleCategories();
       await mySQLInstallService.insertExamplePosts();
 
+      await mySQLInstallService.createUsersTable();
+
       await mySQLInstallService.createConfigTable();
       await mySQLInstallService.insertDefaultConfig(
         newAppInstance.config.language,
@@ -113,7 +115,7 @@ export class MySQLInstallController {
       /**
        * ANCHOR Step three: Update CMS internal config
        */
-      const configPath = path.join(__dirname, "../../../../config.json");
+      const configPath = path.join(__dirname, "../../../../../config.json");
 
       fs.readFile(configPath, "utf8", (err: any, data: any) => {
         const jsonData = JSON.parse(data);

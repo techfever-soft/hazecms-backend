@@ -21,6 +21,10 @@ router.get("/getOne/:postId", (req, res) => {
   postsController.getOne(req, res);
 });
 
+router.get("/getOneBySlug", (req, res) => {
+  postsController.getOneBySlug(req, res);
+});
+
 router.get("/getAll", (req, res) => {
   postsController.getAll(req, res);
 });

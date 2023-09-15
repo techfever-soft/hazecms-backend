@@ -1,4 +1,7 @@
-import { BasicResponse, DataResponse } from "../interfaces/response.interface";
+import {
+  BasicResponse,
+  DataResponse,
+} from "../models/interfaces/response.interface";
 import { MySQLPostsService } from "../services/mysql/posts.service";
 import fs from "fs";
 import path from "path";
@@ -65,6 +68,42 @@ export class PostsController {
           await mySqlPostsService.useDatabase(jsonData.database.database);
 
           const foundPost = await mySqlPostsService.getOne(req.params.postId);
+
+          if (!jsonData.production) {
+            console.log("[POSTS] Post selected");
+          }
+
+          res.status(200).send(<DataResponse>{
+            type: "success",
+            data: foundPost,
+          });
+
+          break;
+      }
+    });
+  }
+
+  /**
+   * Get one post
+   * @param req any
+   * @param res any
+   */
+  public getOneBySlug(req: any, res: any) {
+    fs.readFile(configPath, "utf8", async (err: any, data: any) => {
+      const jsonData = JSON.parse(data);
+
+      switch (jsonData.database.databaseType) {
+        case "mysql":
+          const mySqlPostsService = new MySQLPostsService(
+            jsonData.database.host,
+            jsonData.database.username,
+            jsonData.database.password,
+            jsonData.database.port
+          );
+
+          await mySqlPostsService.useDatabase(jsonData.database.database);
+
+          const foundPost = await mySqlPostsService.getOneBySlug(req.query.postSlug);
 
           if (!jsonData.production) {
             console.log("[POSTS] Post selected");

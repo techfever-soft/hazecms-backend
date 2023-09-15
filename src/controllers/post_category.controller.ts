@@ -1,11 +1,14 @@
 import fs from "fs";
 import path from "path";
-import { MySQLPostsCategoriesService } from "../services/mysql/posts_categories.service";
-import { BasicResponse, DataResponse } from "../interfaces/response.interface";
+import { MySQLPostCategoryService } from "../services/mysql/posts_categories.service";
+import {
+  BasicResponse,
+  DataResponse,
+} from "../models/interfaces/response.interface";
 
 const configPath = path.join(__dirname, "../../../config.json");
 
-export class PostsCategoriesController {
+export class PostCategoryController {
   constructor() {}
 
   /**
@@ -19,7 +22,7 @@ export class PostsCategoriesController {
 
       switch (jsonData.database.databaseType) {
         case "mysql":
-          const mySqlPostsCategoriesService = new MySQLPostsCategoriesService(
+          const mySqlPostsCategoriesService = new MySQLPostCategoryService(
             jsonData.database.host,
             jsonData.database.username,
             jsonData.database.password,
@@ -59,7 +62,7 @@ export class PostsCategoriesController {
 
       switch (jsonData.database.databaseType) {
         case "mysql":
-          const mySqlPostsCategoriesService = new MySQLPostsCategoriesService(
+          const mySqlPostsCategoriesService = new MySQLPostCategoryService(
             jsonData.database.host,
             jsonData.database.username,
             jsonData.database.password,
@@ -97,7 +100,7 @@ export class PostsCategoriesController {
 
       switch (jsonData.database.databaseType) {
         case "mysql":
-          const mySqlPostsCategoriesService = new MySQLPostsCategoriesService(
+          const mySqlPostsCategoriesService = new MySQLPostCategoryService(
             jsonData.database.host,
             jsonData.database.username,
             jsonData.database.password,

@@ -1,4 +1,4 @@
-import { BasicResponse, DataResponse } from "../interfaces/response.interface";
+import { BasicResponse, DataResponse } from "../models/interfaces/response.interface";
 import { MySQLAdminService } from "../services/mysql/admin.service";
 import fs from "fs";
 import path from "path";

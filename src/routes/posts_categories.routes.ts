@@ -1,9 +1,9 @@
-import { PostsCategoriesController } from "../controllers/posts_categories.controller";
+import { PostCategoryController } from "../controllers/post_category.controller";
 import express from "express";
 
 const router = express.Router();
 
-const postsCategoriesController = new PostsCategoriesController();
+const postsCategoriesController = new PostCategoryController();
 
 router.post("/createOne", (req, res) => {
   postsCategoriesController.createOne(req, res);

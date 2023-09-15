@@ -1,14 +1,14 @@
 {
   "name": "hazecms-client-backend",
-  "version": "0.0.1",
-  "description": "",
+  "version": "0.0.2",
+  "description": "A lightweight and easy to use Angular CMS",
   "main": "index.js",
   "scripts": {
     "build": "tsc",
     "serve": "node dist/index.js",
     "serve:nodemon": "nodemon dist/index.js"
   },
-  "private": "false",
+  "private": false,
   "keywords": [
     "hazeCMS",
     "cms",
@@ -31,6 +31,7 @@
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "mysql": "^2.18.1",
-    "nodemon": "^3.0.1"
+    "nodemon": "^3.0.1",
+    "octokit": "^3.1.0"
   }
 }

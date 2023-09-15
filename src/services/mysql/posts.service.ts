@@ -66,10 +66,22 @@ export class MySQLPostsService {
     });
   }
 
-  public getOne(postId: string) {
+  public getOne(postId: string | number) {
     return new Promise<any>((resolve, reject) => {
       this.connection.query(
         "SELECT * FROM haze__posts WHERE id = " + postId,
+        (err, res) => {
+          if (err) reject(err);
+          else resolve(res);
+        }
+      );
+    });
+  }
+
+  public getOneBySlug(postSlug: string) {
+    return new Promise<any>((resolve, reject) => {
+      this.connection.query(
+        "SELECT * FROM haze__posts WHERE slug = '" + postSlug + "'",
         (err, res) => {
           if (err) reject(err);
           else resolve(res);
@@ -109,8 +121,9 @@ export class MySQLPostsService {
           categoryId="${data.categoryId}",
           content='${data.content}',
           tags='${JSON.stringify(data.tags)}',
-          published=${data.published ? 1 + ',' : 0}
-          ${data.published ? "publishedAt=NOW()" : " "}
+          updatedAt=NOW(),
+          published=${data.published ? 1 : 0},
+          publishedAt=${data.published ? "NOW()" : "NULL"}
           WHERE id = ${id}`;
 
       this.connection.query(updatePostQuery, (err, res) => {

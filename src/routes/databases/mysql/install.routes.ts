@@ -1,4 +1,4 @@
-import { MySQLInstallController } from "../../controllers/database/mysql_install.controller";
+import { MySQLInstallController } from "../../../controllers/database/mysql/install.controller";
 import express from "express";
 
 const router = express.Router();
