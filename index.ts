@@ -1,3 +1,5 @@
+import * as config from "./config.json";
+
 import express from "express";
 import { routes } from "./routes";
 
@@ -15,7 +17,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/", routes);
 
-const port = 3000;
+const port = config.port;
 
 app.listen(port, () => {
   console.log(`Client server listening on port ${port}`);

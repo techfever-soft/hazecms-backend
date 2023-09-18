@@ -1,13 +1,13 @@
 import * as mysql from "mysql";
 import axios from "axios";
-import { MySQLInstallService } from "../../../services/mysql/install.service";
-import { serverAPIUrl } from "../../../../api-config";
 import {
   AppInstallForm,
   AppInstallFormAdmin,
 } from "../../../models/interfaces/app.interface";
 import fs from "fs";
 import path from "path";
+import { MySQLInstallService } from "../../../services/mysql/install.service";
+import { BasicResponse } from "../../../models/interfaces/response.interface";
 
 export class MySQLInstallController {
   constructor() {}
@@ -28,14 +28,14 @@ export class MySQLInstallController {
 
     connection.connect((err) => {
       if (err) {
-        res.status(500).send(<any>{
+        res.status(500).send(<BasicResponse>{
           type: "error",
           message: "Error to access to database",
           code: err.code,
         });
         return;
       }
-      res.status(200).send(<any>{
+      res.status(200).send(<BasicResponse>{
         type: "success",
         message: "Connected successfuly to database",
       });
@@ -142,14 +142,14 @@ export class MySQLInstallController {
       /**
        * ANCHOR Step four: Return the status
        */
-      res.status(200).send({
+      res.status(200).send(<BasicResponse>{
         type: "success",
         message: "App installed successfully",
       });
     } catch (e) {
       console.log(e);
 
-      res.status(500).send({
+      res.status(500).send(<BasicResponse>{
         type: "error",
         message: "Can't install the app",
       });

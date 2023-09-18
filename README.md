@@ -1,3 +1,5 @@
+![Haze Logo](https://firebasestorage.googleapis.com/v0/b/haze-cms.appspot.com/o/haze__brand-line.png?alt=media&token=b6271507-8b28-4c44-b144-63c1b8a153c0)
+
 # 🚀 HazeCMS (back-end)
 
 Welcome to the HazeCMS Back-end repository.

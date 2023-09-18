@@ -4,7 +4,6 @@ import { mySQLInstallRoutes } from "./src/routes/databases/mysql/install.routes"
 import { pagesRoutes } from "./src/routes/pages.routes";
 import { postsCategoriesRoutes } from "./src/routes/posts_categories.routes";
 import { postsRoutes } from "./src/routes/posts.routes";
-import { updateRoutes } from "./src/routes/update.routes";
 
 const router = express.Router();
 
@@ -15,8 +14,6 @@ router.use("/api/v1/posts/", postsRoutes);
 router.use("/api/v1/pages/", pagesRoutes);
 
 router.use("/api/v1/posts_categories/", postsCategoriesRoutes);
-
-router.use("/api/v1/updates/", updateRoutes);
 
 /**
  * Install routes

@@ -58,7 +58,6 @@ export class PagesController {
 
           if (req.query.path) {
             await mySqlPostsService.useDatabase(jsonData.database.database);
-            console.log("PARAMS Q1 =>", req.query.path);
 
             mySqlPostsService.getOne(req.query.path).then((page) => {
               if (!jsonData.production) {

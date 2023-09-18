@@ -1,5 +1,4 @@
 import { PagesController } from "../controllers/pages.controller";
-import { UpdateController } from "../controllers/update.controller";
 import express from "express";
 
 const router = express.Router();

@@ -1,12 +1,12 @@
 {
   "name": "hazecms-client-backend",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A lightweight and easy to use Angular CMS",
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "serve": "node dist/index.js",
-    "serve:nodemon": "nodemon dist/index.js"
+    "serve": "tsc && node dist/index.js",
+    "serve:nodemon": "tsc && nodemon dist/index.js"
   },
   "private": false,
   "keywords": [
