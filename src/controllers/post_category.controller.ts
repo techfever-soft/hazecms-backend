@@ -8,6 +8,10 @@ import {
 
 const configPath = path.join(__dirname, "../../../config.json");
 
+/**
+ * TODO: Remove all fs.readFile
+ */
+
 export class PostCategoryController {
   constructor() {}
 

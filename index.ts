@@ -1,5 +1,6 @@
 import * as config from "./config.json";
 
+import chalk from "chalk";
 import express from "express";
 import { routes } from "./routes";
 
@@ -20,5 +21,11 @@ app.use("/", routes);
 const port = config.port;
 
 app.listen(port, () => {
-  console.log(`Client server listening on port ${port}`);
+  console.log(" ");
+  console.log(
+    `[${chalk.bold.blueBright(
+      "INFO"
+    )}] HazeCMS Backend Server running on port ${chalk.bold(port)}`
+  );
+  console.log(" ");
 });

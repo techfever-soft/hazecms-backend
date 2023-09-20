@@ -8,6 +8,7 @@ import fs from "fs";
 import path from "path";
 import { MySQLInstallService } from "../../../services/mysql/install.service";
 import { BasicResponse } from "../../../models/interfaces/response.interface";
+import chalk from "chalk";
 
 export class MySQLInstallController {
   constructor() {}
@@ -48,6 +49,8 @@ export class MySQLInstallController {
    * @param res any
    */
   public async finalizeInstall(req: any, res: any) {
+    console.log(`[${chalk.blueBright("INFO")}] MySQL Installation Requested`);
+
     const newAppInstance: AppInstallForm = {
       activation: {
         apiKey: req.body.activation.apiKey,
@@ -81,9 +84,11 @@ export class MySQLInstallController {
     /**
      * ANCHOR Step one: Create app instance
      */
-    // TODO: Create app instance on core server
     // axios
-    //   .post(serverAPIUrl + "app/createAppInstance", newAppInstance)
+    //   .post(
+    //     "https://api.hazecms.com/api/v1/app/createAppInstance",
+    //     newAppInstance
+    //   )
     //   .then(() => {
     //     console.log("created app instance");
     //   });
@@ -124,6 +129,7 @@ export class MySQLInstallController {
 
         jsonData.production = false;
 
+        // NOTE: Update database settings
         jsonData.database.databaseType = newAppInstance.database.databaseType;
         jsonData.database.host = newAppInstance.database.host;
         jsonData.database.username = newAppInstance.database.username;
@@ -134,7 +140,7 @@ export class MySQLInstallController {
         const updatedJson = JSON.stringify(jsonData, null, 2);
         fs.writeFile(configPath, updatedJson, "utf8", (err: any) => {
           if (!err) {
-            console.log("[UPDATE] Updated JSON config !");
+            console.log(`[${chalk.greenBright("UPDATE")}] Updated config.json`);
           }
         });
       });

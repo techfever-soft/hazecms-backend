@@ -1,19 +1,17 @@
 import * as mysql from "mysql";
 
-import { MySQLConnectionMiddleware } from "../../middlewares/database.middleware";
+import { MySQLConnectionMiddleware } from "../../middlewares/mysql.middleware";
 
 export class MySQLPostsService {
   public connection: mysql.Connection;
 
   constructor(host: string, user: string, password: string, port: number) {
-    const mySQLConnectionMiddleware = new MySQLConnectionMiddleware(
+    this.connection = new MySQLConnectionMiddleware(
       host,
       user,
       password,
       port
-    );
-
-    this.connection = mySQLConnectionMiddleware.getConnection();
+    ).getConnection();
   }
 
   /**

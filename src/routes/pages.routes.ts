@@ -13,4 +13,8 @@ router.get("/getAll", (req, res) => {
   updateController.getAll(req, res);
 });
 
+router.delete("/deleteOne/:pageId", (req, res) => {
+  updateController.deleteOne(req, res);
+});
+
 export const pagesRoutes = router;

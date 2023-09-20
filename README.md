@@ -14,9 +14,23 @@ This project is still quite small and build by one developer. But I hope to make
 
 > ### If you want to clone the front-end server, please [go on this repository](https://github.com/techfever-soft/hazecms-frontend)
 
-> # [Join the newsletter and see what can be done with HazeCMS](https://hazecms.com)
+> ## [Read the documentation](https://docs.hazecms.com)
 
 ### Changelogs
+
+v0.0.4
+
+- [x] Added login/register for users with JWT
+- [x] Added admin dashboard items
+- [x] Patched update system
+- [x] Added external scripts part
+
+v0.0.3
+
+- [x] Patched documentation link
+- [x] Added admin dashboard items
+- [x] Added new items to admin settings
+- [x] Patched update system
 
 v0.0.2
 

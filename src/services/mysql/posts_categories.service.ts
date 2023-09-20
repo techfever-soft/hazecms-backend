@@ -1,6 +1,6 @@
 import * as mysql from "mysql";
 
-import { MySQLConnectionMiddleware } from "../../middlewares/database.middleware";
+import { MySQLConnectionMiddleware } from "../../middlewares/mysql.middleware";
 
 export class MySQLPostCategoryService {
   public connection: mysql.Connection;

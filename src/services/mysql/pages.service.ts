@@ -1,6 +1,6 @@
 import * as mysql from "mysql";
 
-import { MySQLConnectionMiddleware } from "../../middlewares/database.middleware";
+import { MySQLConnectionMiddleware } from "../../middlewares/mysql.middleware";
 
 export class MySQLPagesService {
   public connection: mysql.Connection;
@@ -45,6 +45,18 @@ export class MySQLPagesService {
         if (err) reject(err);
         else resolve(res);
       });
+    });
+  }
+
+  public deleteOne(id: string | number) {
+    return new Promise<any[]>((resolve, reject) => {
+      this.connection.query(
+        "DELETE FROM haze__pages WHERE id = " + id,
+        (err, res) => {
+          if (err) reject(err);
+          else resolve(res);
+        }
+      );
     });
   }
 }

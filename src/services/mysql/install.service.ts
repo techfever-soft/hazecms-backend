@@ -1,7 +1,8 @@
 import * as mysql from "mysql";
 
 import { AppInstallFormAdmin } from "../../models/interfaces/app.interface";
-import { MySQLConnectionMiddleware } from "../../middlewares/database.middleware";
+import { MySQLConnectionMiddleware } from "../../middlewares/mysql.middleware";
+import chalk from "chalk";
 import crypto from "crypto";
 
 export class MySQLInstallService {
@@ -47,8 +48,20 @@ export class MySQLInstallService {
         else resolve();
       });
 
-      console.log("[CREATE] Creating database « " + databaseName + " »");
-      console.log("[INFO] Using database « " + databaseName + " »");
+      console.log(
+        "[" +
+          chalk.yellowBright("CREATE") +
+          "] Creating database « " +
+          databaseName +
+          " »"
+      );
+      console.log(
+        "[" +
+          chalk.blueBright("INFO") +
+          "] Using database « " +
+          databaseName +
+          " »"
+      );
     });
   }
 
@@ -68,7 +81,11 @@ export class MySQLInstallService {
         else resolve();
       });
 
-      console.log("[CREATE] Creating table « haze__administrators »");
+      console.log(
+        "[" +
+          chalk.yellowBright("CREATE") +
+          "] Creating table « haze__administrators »"
+      );
     });
   }
 
@@ -91,7 +108,9 @@ export class MySQLInstallService {
         else resolve();
       });
 
-      console.log("[CREATE] Creating table « haze__pages »");
+      console.log(
+        "[" + chalk.yellowBright("CREATE") + "] Creating table « haze__pages »"
+      );
     });
   }
 
@@ -116,7 +135,9 @@ export class MySQLInstallService {
         else resolve();
       });
 
-      console.log("[CREATE] Creating table « haze__posts »");
+      console.log(
+        "[" + chalk.yellowBright("CREATE") + "] Creating table « haze__posts »"
+      );
     });
   }
 
@@ -133,7 +154,11 @@ export class MySQLInstallService {
         else resolve();
       });
 
-      console.log("[CREATE] Creating table « haze__posts_categories »");
+      console.log(
+        "[" +
+          chalk.yellowBright("CREATE") +
+          "] Creating table « haze__posts_categories »"
+      );
     });
   }
 
@@ -147,7 +172,8 @@ export class MySQLInstallService {
               passwordHash TEXT NOT NULL,
               passwordSalt TEXT NOT NULL,
               createdAt DATETIME NOT NULL,
-              lastSignIn DATETIME NULL
+              lastSignIn DATETIME NULL,
+              role VARCHAR(255) NOT NULL
           )`;
 
       this.connection.query(createUsersTable, (err: any) => {
@@ -155,7 +181,9 @@ export class MySQLInstallService {
         else resolve();
       });
 
-      console.log("[CREATE] Creating table « haze__users »");
+      console.log(
+        "[" + chalk.yellowBright("CREATE") + "] Creating table « haze__users »"
+      );
     });
   }
 
@@ -175,7 +203,9 @@ export class MySQLInstallService {
         else resolve();
       });
 
-      console.log("[CREATE] Creating table « haze__config »");
+      console.log(
+        "[" + chalk.yellowBright("CREATE") + "] Creating table « haze__config »"
+      );
     });
   }
 
@@ -207,7 +237,9 @@ export class MySQLInstallService {
       resolve();
 
       console.log(
-        "[UPDATE] Inserting admins into table « haze__administrators »"
+        "[" +
+          chalk.greenBright("UPDATE") +
+          "] Inserting admins into table « haze__administrators »"
       );
     });
   }
@@ -249,7 +281,11 @@ export class MySQLInstallService {
         else resolve();
       });
 
-      console.log("[UPDATE] Inserting pages into table « haze__pages »");
+      console.log(
+        "[" +
+          chalk.greenBright("UPDATE") +
+          "] Inserting pages into table « haze__pages »"
+      );
     });
   }
 
@@ -261,7 +297,7 @@ export class MySQLInstallService {
           "My new post",
           "my-new-post",
           1,
-          "Lorem ipusm dolor sit amet",
+          "<h1 style='background:red'>Lorem ipusm dolor sit amet</h1>",
           '["myFirstTag"]',
           1,
           NOW(),
@@ -275,7 +311,11 @@ export class MySQLInstallService {
         else resolve();
       });
 
-      console.log("[UPDATE] Inserting posts into table « haze_posts »");
+      console.log(
+        "[" +
+          chalk.greenBright("UPDATE") +
+          "] Inserting posts into table « haze_posts »"
+      );
     });
   }
 
@@ -294,7 +334,9 @@ export class MySQLInstallService {
       });
 
       console.log(
-        "[UPDATE] Inserting categories into table « haze__posts_categories »"
+        "[" +
+          chalk.greenBright("UPDATE") +
+          "] Inserting categories into table « haze__posts_categories »"
       );
     });
   }
@@ -332,7 +374,9 @@ export class MySQLInstallService {
       });
 
       console.log(
-        "[UPDATE] Inserting default config into table « haze__config »"
+        "[" +
+          chalk.greenBright("UPDATE") +
+          "] Inserting default config into table « haze__config »"
       );
     });
   }

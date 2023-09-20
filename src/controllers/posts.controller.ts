@@ -8,11 +8,15 @@ import path from "path";
 
 const configPath = path.join(__dirname, "../../../config.json");
 
+/**
+ * TODO: Remove all fs.readFile
+ */
+
 export class PostsController {
   constructor() {}
 
   /**
-   * Create one post
+   * Creates one post
    * @param req any
    * @param res any
    */
@@ -48,7 +52,7 @@ export class PostsController {
   }
 
   /**
-   * Get one post
+   * Gets one post by his id
    * @param req any
    * @param res any
    */
@@ -84,7 +88,7 @@ export class PostsController {
   }
 
   /**
-   * Get one post
+   * Gets one post by his slug
    * @param req any
    * @param res any
    */
@@ -103,7 +107,9 @@ export class PostsController {
 
           await mySqlPostsService.useDatabase(jsonData.database.database);
 
-          const foundPost = await mySqlPostsService.getOneBySlug(req.query.postSlug);
+          const foundPost = await mySqlPostsService.getOneBySlug(
+            req.query.postSlug
+          );
 
           if (!jsonData.production) {
             console.log("[POSTS] Post selected");
@@ -120,7 +126,7 @@ export class PostsController {
   }
 
   /**
-   * Update one post
+   * Updates one post
    * @param req any
    * @param res any
    */
@@ -203,10 +209,9 @@ export class PostsController {
    * @param req any
    * @param res any
    */
-  public getAll(req: any, res: any) {
+  public async getAll(req: any, res: any) {
     fs.readFile(configPath, "utf8", async (err: any, data: any) => {
       const jsonData = JSON.parse(data);
-
       switch (jsonData.database.databaseType) {
         case "mysql":
           const mySqlPostsService = new MySQLPostsService(
@@ -215,20 +220,15 @@ export class PostsController {
             jsonData.database.password,
             jsonData.database.port
           );
-
           await mySqlPostsService.useDatabase(jsonData.database.database);
-
           const allPosts = await mySqlPostsService.getAll();
-
           if (!jsonData.production) {
             console.log("[POSTS] Post list selected");
           }
-
           res.status(200).send(<DataResponse>{
             type: "success",
             data: allPosts,
           });
-
           break;
       }
     });
