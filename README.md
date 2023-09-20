@@ -2,7 +2,7 @@
 
 # 🚀 HazeCMS (front-end)
 
-This repository contains the frontend code for a flexible and lightweight Content Management System.
+This repository contains the backend code for a flexible and lightweight Content Management System.
 
 Frontend part was built using Angular 16.
 
